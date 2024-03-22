@@ -21,6 +21,11 @@ const MemoDetail = ({ id }: Props) => {
     inputRef.current.value = "";
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
+      append();
+    }
+  };
   const handleClick = () => append();
 
   if (!memo) {
