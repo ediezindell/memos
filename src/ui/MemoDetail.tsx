@@ -1,65 +1,29 @@
 "use client";
 
-import { Memo } from "@/types/memo";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
+import { useMemo } from "@/hooks/useMemo";
 
 type Props = {
   id: string;
 };
 
 const MemoDetail = ({ id }: Props) => {
-  const [memo, setMemo] = useState<Memo | null>();
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
-  const ref = useRef<HTMLTextAreaElement>(null);
-
-  const generateStorageKey = (id: string) => `memo----${id}`;
-
-  useEffect(() => {
-    const fetchMemo = async () => {
-      const loadedMemoJson = localStorage.getItem(generateStorageKey(id));
-      console.log(loadedMemoJson);
-      if (!loadedMemoJson) {
-        return;
-      }
-      const loadedMemo = JSON.parse(loadedMemoJson);
-
-      const isMemo = (_memo: unknown): _memo is Memo =>
-        typeof _memo === "object" &&
-        _memo !== null &&
-        "id" in _memo &&
-        "content" in _memo;
-
-      if (!isMemo(loadedMemo)) {
-        console.log("not memo type");
-        return;
-      }
-      setMemo(loadedMemo);
-    };
-    fetchMemo();
-  }, [id]);
-
-  useEffect(() => {
-    if (!memo) {
-      return;
-    }
-    const json = JSON.stringify(memo);
-    localStorage.setItem(generateStorageKey(memo.id), json);
-    console.log("saved");
-  }, [memo]);
+  const { memo, appendContent } = useMemo(id);
 
   const append = () => {
-    if (!ref.current || !memo) {
+    if (!inputRef.current) {
       return;
     }
-    const { value } = ref.current;
-    const { content } = memo;
-    const newContent = `${content.length ? `${content}\n` : ""}${value}`;
-    setMemo({
-      id,
-      content: newContent
-    });
-    ref.current.value = "";
+    const { value } = inputRef.current;
+    appendContent(value);
+    inputRef.current.value = "";
   };
+
+  if (!memo) {
+    return "loading...";
+  }
 
   return (
     <div className="flex flex-col justify-between h-dvh max-h-dvh">
@@ -70,8 +34,8 @@ const MemoDetail = ({ id }: Props) => {
       </div>
       <div className="flex-shrink-0">
         <textarea
-          ref={ref}
           className="border w-full p-2 my-2 resize-none"
+          ref={inputRef}
           autoFocus={true}
         />
         <button
