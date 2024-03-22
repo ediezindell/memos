@@ -10,7 +10,7 @@ type Props = Readonly<{ children: React.ReactNode }>;
 
 const Layout = ({ children }: Props) => (
   <html lang="ja">
-    <body className="container mx-auto">{children}</body>
+    <body className="container max-w-sm leading-relaxed">{children}</body>
   </html>
 );
 export default Layout;

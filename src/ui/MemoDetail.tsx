@@ -28,20 +28,21 @@ const MemoDetail = ({ id }: Props) => {
   return (
     <div className="flex flex-col justify-between h-dvh max-h-dvh">
       <div className="flex-shrink overflow-scroll p-4">
-        <pre className="">
+        <p className="break-words whitespace-pre-wrap">
           {memo?.content.length ? memo.content : "コンテンツはありません"}
-        </pre>
+        </p>
       </div>
-      <div className="flex-shrink-0">
+      <div className="flex flex-col flex-shrink-0">
         <textarea
-          className="border w-full p-2 my-2 resize-none"
           ref={inputRef}
+          className="border w-full p-2 resize-none h-12 focus:h-52"
           autoFocus={true}
+          placeholder="何か入力してください"
         />
         <button
           type="button"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 w-full"
           onClick={append}
+          className="bg-red-500 text-white py-2 px-4 w-full"
         >
           save
         </button>
