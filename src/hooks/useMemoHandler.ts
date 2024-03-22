@@ -2,7 +2,7 @@ import { loadMemo, saveMemo } from "@/lib/util";
 import { Memo } from "@/types/memo";
 import { useEffect, useState } from "react";
 
-export const useMemo = (id: string) => {
+export const useMemoHandler = (id: string) => {
   const [memo, setMemo] = useState<Memo | null>();
   useEffect(() => {
     if (!id) {

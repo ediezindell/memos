@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { useMemo } from "@/hooks/useMemo";
+import { useMemoHandler } from "@/hooks/useMemoHandler";
 
 type Props = {
   id: string;
@@ -10,7 +10,7 @@ type Props = {
 const MemoDetail = ({ id }: Props) => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
-  const { memo, appendContent } = useMemo(id);
+  const { memo, appendContent } = useMemoHandler(id);
 
   const append = () => {
     if (!inputRef.current) {
@@ -20,6 +20,8 @@ const MemoDetail = ({ id }: Props) => {
     appendContent(value);
     inputRef.current.value = "";
   };
+
+  const handleClick = () => append();
 
   if (!memo) {
     return "loading...";
@@ -38,11 +40,12 @@ const MemoDetail = ({ id }: Props) => {
           className="border w-full p-2 resize-none h-12 focus:h-52"
           autoFocus={true}
           placeholder="何か入力してください"
+          onKeyDown={handleKeyDown}
         />
         <button
           type="button"
-          onClick={append}
           className="bg-red-500 text-white py-2 px-4 w-full"
+          onClick={handleClick}
         >
           save
         </button>
