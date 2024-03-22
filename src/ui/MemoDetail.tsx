@@ -62,15 +62,27 @@ const MemoDetail = ({ id }: Props) => {
   };
 
   return (
-    <>
-      <pre>
-        {memo?.content.length ? memo.content : "コンテンツはありません"}
-      </pre>
-      <textarea ref={ref} />
-      <button type="button" onClick={append}>
-        save
-      </button>
-    </>
+    <div className="flex flex-col justify-between h-dvh max-h-dvh">
+      <div className="flex-shrink overflow-scroll p-4">
+        <pre className="">
+          {memo?.content.length ? memo.content : "コンテンツはありません"}
+        </pre>
+      </div>
+      <div className="flex-shrink-0">
+        <textarea
+          ref={ref}
+          className="border w-full p-2 my-2 resize-none"
+          autoFocus={true}
+        />
+        <button
+          type="button"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 w-full"
+          onClick={append}
+        >
+          save
+        </button>
+      </div>
+    </div>
   );
 };
 

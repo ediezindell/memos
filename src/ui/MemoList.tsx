@@ -22,7 +22,7 @@ const MemoList = () => {
     fetchMemos();
   }, []);
   return (
-    <ul>
+    <ul className="max-w-md text-gray-900 divide-y divide-gray-200">
       {memos.map((memo) => (
         <MemoItem key={memo.id} memo={memo} />
       ))}

@@ -10,8 +10,8 @@ type Props = {
 const MemoItem = ({ memo }: Props) => {
   return (
     <li>
-      <Link href={`/${memo.id}`}>
-        {memo.id}: {memo.content.split("\n").pop()}
+      <Link href={`/${memo.id}`} className="block w-full p-2">
+        {memo.content.split("\n").pop()}
       </Link>
     </li>
   );
