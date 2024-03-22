@@ -4,19 +4,15 @@ import { useEffect, useState } from "react";
 import MemoItem from "./MemoItem";
 
 import type { Memo } from "@/types/memo";
+import { loadMemo, loadMemoIds } from "../lib/util";
 
 const MemoList = () => {
   const [memos, setMemos] = useState<Memo[]>([]);
 
   useEffect(() => {
     const fetchMemos = () => {
-      // TODO: fetchする
-      const loadedMemos: Memo[] = [
-        {
-          id: "1",
-          content: "hoge\nhoge"
-        }
-      ];
+      const ids = loadMemoIds();
+      const loadedMemos: Memo[] = ids.map((id) => loadMemo(id));
       setMemos(loadedMemos);
     };
     fetchMemos();
