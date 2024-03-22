@@ -1,3 +1,4 @@
-export default function Home() {
-  return "Home";
-}
+import MemoList from "@/ui/MemoList";
+
+const Page = () => <MemoList />;
+export default Page;
