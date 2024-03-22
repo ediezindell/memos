@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { useMemoHandler } from "@/hooks/useMemoHandler";
+import Link from "next/link";
 
 type Props = {
   id: string;
@@ -47,13 +48,21 @@ const MemoDetail = ({ id }: Props) => {
           placeholder="何か入力してください"
           onKeyDown={handleKeyDown}
         />
-        <button
-          type="button"
-          className="bg-red-500 text-white py-2 px-4 w-full"
-          onClick={handleClick}
-        >
-          save
-        </button>
+        <div className="flex">
+          <Link
+            href={`/${id}/edit`}
+            className="block text-center bg-blue-500 text-white py-2 px-4 w-full"
+          >
+            edit
+          </Link>
+          <button
+            type="button"
+            className="bg-red-500 text-white py-2 px-4 w-full"
+            onClick={handleClick}
+          >
+            save
+          </button>
+        </div>
       </div>
     </div>
   );

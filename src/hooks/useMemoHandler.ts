@@ -4,6 +4,15 @@ import { useEffect, useState } from "react";
 
 export const useMemoHandler = (id: string) => {
   const [memo, setMemo] = useState<Memo | null>();
+
+  const updateMemo = (newMemo: Memo) => {
+    if (memo?.content !== newMemo.content) {
+      setMemo(newMemo);
+      saveMemo(newMemo);
+      alert("updated!");
+    }
+  };
+
   useEffect(() => {
     if (!id) {
       return;
@@ -12,20 +21,24 @@ export const useMemoHandler = (id: string) => {
     setMemo(loadedMemo);
   }, [id]);
 
-  useEffect(() => {
-    if (!memo) {
-      return;
-    }
-    saveMemo(memo);
-  }, [memo]);
-
   const appendContent = (value: string) => {
     if (!memo) {
       return;
     }
     const { content } = memo;
     const newContent = `${content.length ? `${content}\n` : ""}${value}`.trim();
-    setMemo({
+    updateMemo({
+      id,
+      content: newContent
+    });
+  };
+
+  const updateContent = (value: string) => {
+    if (!memo) {
+      return;
+    }
+    const newContent = value.trim();
+    updateMemo({
       id,
       content: newContent
     });
@@ -33,6 +46,7 @@ export const useMemoHandler = (id: string) => {
 
   return {
     memo,
-    appendContent
+    appendContent,
+    updateContent
   };
 };
