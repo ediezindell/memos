@@ -8,10 +8,13 @@ type Props = {
 };
 
 const MemoItem = ({ memo }: Props) => {
+  const firstLine = memo.content.length
+    ? memo.content.split("\n").shift()
+    : "無題";
   return (
     <li>
       <Link href={`/${memo.id}`} className="block w-full p-4 border-b-2">
-        {memo.content.split("\n").pop()}
+        {firstLine}
       </Link>
     </li>
   );
