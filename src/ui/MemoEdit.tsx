@@ -33,7 +33,7 @@ const MemoEdit = ({ id }: Props) => {
   return (
     <div className="flex flex-col h-dvh">
       <textarea
-        className="border w-full p-2 resize-none flex-shrink h-full"
+        className="border w-full p-4 resize-none flex-shrink h-full"
         ref={inputRef}
         onKeyDown={handleKeyDown}
         autoFocus

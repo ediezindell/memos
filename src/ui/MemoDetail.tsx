@@ -3,12 +3,15 @@
 import { useRef } from "react";
 import { useMemoHandler } from "@/hooks/useMemoHandler";
 import Link from "next/link";
+import PrimaryButtton from "./components/PrimaryButton";
+import SecondaryButtonLink from "./components/SecondaryButtonLink";
 
 type Props = {
   id: string;
 };
 
 const MemoDetail = ({ id }: Props) => {
+  const viewRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const { memo, appendContent } = useMemoHandler(id);
@@ -20,6 +23,7 @@ const MemoDetail = ({ id }: Props) => {
     const { value } = inputRef.current;
     appendContent(value);
     inputRef.current.value = "";
+    inputRef.current.focus();
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -30,38 +34,31 @@ const MemoDetail = ({ id }: Props) => {
   const handleClick = () => append();
 
   if (!memo) {
-    return "loading...";
+    return (
+      <div className="p-4 h-dvh grid content-center">
+        <p className="text-center">loading...</p>
+      </div>
+    );
   }
 
   return (
     <div className="flex flex-col justify-between h-dvh max-h-dvh">
-      <div className="flex-shrink overflow-scroll p-4">
-        <p className="break-words whitespace-pre-wrap">
+      <div ref={viewRef} className="flex-shrink overflow-scroll">
+        <p className="break-words whitespace-pre-wrap p-4">
           {memo?.content.length ? memo.content : "コンテンツはありません"}
         </p>
       </div>
-      <div className="flex flex-col flex-shrink-0">
+      <div className="flex flex-col flex-shrink-0 max-h-dvh">
         <textarea
           ref={inputRef}
-          className="border w-full p-2 resize-none h-12 focus:h-52"
+          className="border w-full p-2 focus:p-4 resize-none form-size-content max-h-12 focus:max-h-full"
           autoFocus={true}
-          placeholder="何か入力してください"
+          placeholder="追記する"
           onKeyDown={handleKeyDown}
         />
         <div className="flex">
-          <Link
-            href={`/${id}/edit`}
-            className="block text-center bg-blue-500 text-white py-2 px-4 w-full"
-          >
-            edit
-          </Link>
-          <button
-            type="button"
-            className="bg-red-500 text-white py-2 px-4 w-full"
-            onClick={handleClick}
-          >
-            save
-          </button>
+          <SecondaryButtonLink href={`/${id}/edit`}>edit</SecondaryButtonLink>
+          <PrimaryButtton onClick={handleClick}>save</PrimaryButtton>
         </div>
       </div>
     </div>
